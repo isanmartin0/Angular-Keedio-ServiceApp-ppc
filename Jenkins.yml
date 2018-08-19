@@ -1,0 +1,81 @@
+openshift:
+  templatePath: kube/nginx_template.yaml
+
+imageStreamNodejsVersion: 8
+
+removeSourcePackageLock: true
+
+showInstalledDependencies:
+  showGlobalInstalledDependencies: true
+  showGlobalInstalledDependenciesDepthLimit: true
+  showGlobalInstalledDependenciesDepth: 1
+  showLocalInstalledDependencies: true
+  showLocalInstalledDependenciesDepthLimit: true
+  showLocalInstalledDependenciesDepth: 1
+  showLocalInstalledDependenciesOnlyType: false
+  showLocalInstalledDependenciesType: dev
+
+angularCli:
+  installGloballyAngularCli: false
+  installAngularCliSpecificVersion: true
+  angularCliVersion: 1.4.0
+
+nginxVersion: '1.12'
+
+ngBuildProd:
+  useBuildProdFlags: false
+  buildProdFlags:  --aot=false --build-optimizer
+
+environmentVariables:
+  environmentVariable1: value1
+
+npmRegistryPublish:
+  # - release
+
+confirmDeploy:
+  - master
+
+timeoutConfirmDeploy: true
+timeoutConfirmDeployTime: 30
+timeoutConfirmDeployUnit: MINUTES
+
+testing:
+  predeploy:
+    unitTesting:
+      - feature
+      - develop
+      - release
+      - hotfix
+    sonarQube:
+      - feature
+      - develop
+      - release
+      - hotfix
+
+  postdeploy:
+    smokeTesting:
+      # - release
+      # - master
+    securityTesting:
+      # - develop
+      # - release
+    performanceTesting:
+      # - release
+      # - hotfix
+    acceptanceTesting:
+      # - develop
+      # - release
+
+notifications:
+  branch:
+    - feature
+    - develop
+    - release
+    - master
+    - hotfix
+type: slack
+
+jenkins:
+  maxOldBuildsToKeep: 10
+  daysOldBuildsToKeep: 0
+  errorOnPostDeployTestsUnstableResult: true
