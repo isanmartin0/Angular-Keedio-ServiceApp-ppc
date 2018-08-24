@@ -3,6 +3,11 @@ openshift:
 
 imageStreamNodejsVersion: 8
 
+angularCli:
+  installGloballyAngularCli: false
+  installAngularCliSpecificVersion: true
+  angularCliVersion: 1.4.0
+
 removeSourcePackageLock: true
 
 showInstalledDependencies:
@@ -15,22 +20,19 @@ showInstalledDependencies:
   showLocalInstalledDependenciesOnlyType: false
   showLocalInstalledDependenciesType: dev
 
-angularCli:
-  installGloballyAngularCli: false
-  installAngularCliSpecificVersion: true
-  angularCliVersion: 1.4.0
-
-nginxVersion: '1.12'
-
 ngBuildProd:
   useBuildProdFlags: false
   buildProdFlags:  --aot=false --build-optimizer
+  useSpecificOutputPath: true
+  buildSpecificOutputPath: dist/Angular-Keedio-ServiceApp/
 
 environmentVariables:
   environmentVariable1: value1
 
 npmRegistryPublish:
   # - release
+
+nginxVersion: '1.12'
 
 confirmDeploy:
   - master
@@ -41,30 +43,68 @@ timeoutConfirmDeployUnit: MINUTES
 
 testing:
   predeploy:
-    unitTesting:
-      - feature
-      - develop
-      - release
-      - hotfix
-    sonarQube:
+    useLintingFlags: true
+    lintingFlags: " "
+    linting:
       - feature
       - develop
       - release
       - hotfix
 
+    useUnitTestingFlags: false
+    unitTestingFlags: --browsers ChromeHeadless --watch=false --code-coverage
+    useUnitTestingKarmaConfigurationFileSpecificPath: false
+    unitTestingKarmaConfigurationFileSpecificPath:
+    unitTesting:
+      - feature
+      - develop
+      - release
+      - hotfix
+
+    useE2ETestingFlags: false
+    e2eTestingFlags:
+    useE2ETestingProtractorConfigurationFileSpecificPath: false
+    e2eTestingProtractorConfigurationFileSpecificPath:
+    e2eTesting:
+      - feature
+      - develop
+      - release
+      - hotfix
+
+    useKarmaSonarQubeReporterSpecificVersion: false
+    karmaSonarQubeReporterSpecificVersion: 1.2.0
+    sonarQube:
+      - feature
+      - develop
+      - release
+      - hotfix
+    sonarQubeAnalisis:
+      sonarSources: src
+      sonarExclusions: "**/node_modules/**,**/*.spec.ts"
+      sonarTests: e2e
+      sonarTestInclusions: "**/*.spec.ts"
+      sonarTSTSLintConfigPath: tslint.json
+      sonarTypescriptExclusions: "**/node_modules/**,**/typings.d.ts,**/main.ts,**/environments/environment*.ts,**/*routing.module.ts"
+      sonarTestExecutionReportPath: reports/test-report.xml
+      sonarCoverageReportPath: coverage/lcov.info
+
+
   postdeploy:
+    timeoutConfirmPostDeployTests: true
+    timeoutConfirmPostDeployTestsTime: 30
+    timeoutConfirmPostDeployTestsUnit: MINUTES
     smokeTesting:
-      # - release
+      - release
       # - master
     securityTesting:
       # - develop
-      # - release
+      - release
     performanceTesting:
-      # - release
+      - release
       # - hotfix
     acceptanceTesting:
       # - develop
-      # - release
+      - release
 
 notifications:
   branch:
