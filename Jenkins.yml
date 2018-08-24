@@ -30,7 +30,7 @@ environmentVariables:
   environmentVariable1: value1
 
 npmRegistryPublish:
-  # - release
+  - release
 
 nginxVersion: '1.12'
 
