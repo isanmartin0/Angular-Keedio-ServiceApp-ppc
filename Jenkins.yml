@@ -44,7 +44,7 @@ timeoutConfirmDeployUnit: MINUTES
 testing:
   predeploy:
     useLintingFlags: true
-    lintingFlags: " "
+    lintingFlags: Angular-Keedio-ServiceApp --format json --force true
     linting:
       - feature
       - develop
