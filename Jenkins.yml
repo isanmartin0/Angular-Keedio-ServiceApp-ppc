@@ -20,17 +20,28 @@ showInstalledDependencies:
   showLocalInstalledDependenciesOnlyType: false
   showLocalInstalledDependenciesType: dev
 
-ngBuildProd:
-  useBuildProdFlags: false
-  buildProdFlags:  --aot=false --build-optimizer
+
+ngBuild:
+  useBuildFlags: false
+  buildFlags: --aot=false --build-optimizer
   useSpecificOutputPath: true
   buildSpecificOutputPath: dist/Angular-Keedio-ServiceApp/
+  flagProdBranches:
+    - release
+    - hotfix
+    - master
+  buildEnvironments:
+    environmentDevelop: dev
+    environmentFeature: dev
+    environmentRelease: uat
+    environmentHotfix: uat
+    environmentMaster: prod
 
 environmentVariables:
   environmentVariable1: value1
 
 npmRegistryPublish:
-  # - release
+  - master
 
 nginxVersion: '1.12'
 
